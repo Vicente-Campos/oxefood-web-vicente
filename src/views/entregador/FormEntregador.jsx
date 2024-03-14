@@ -1,34 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon, FormSelect, FormGroup, FormRadio} from 'semantic-ui-react';
 
 const options = [
-    { key: 'af', value: 'af', text: 'Afghanistan' },
-    { key: 'ax', value: 'ax', text: 'Aland Islands' },
-    { key: 'al', value: 'al', text: 'Albania' },
-    { key: 'dz', value: 'dz', text: 'Algeria' },
-    { key: 'as', value: 'as', text: 'American Samoa' },
-    { key: 'ad', value: 'ad', text: 'Andorra' },
-    { key: 'ao', value: 'ao', text: 'Angola' },
-    { key: 'ai', value: 'ai', text: 'Anguilla' },
-    { key: 'ag', value: 'ag', text: 'Antigua' },
-    { key: 'ar', value: 'ar', text: 'Argentina' },
-    { key: 'am', value: 'am', text: 'Armenia' },
-    { key: 'aw', value: 'aw', text: 'Aruba' },
-    { key: 'au', value: 'au', text: 'Australia' },
-    { key: 'at', value: 'at', text: 'Austria' },
-    { key: 'az', value: 'az', text: 'Azerbaijan' },
-    { key: 'bs', value: 'bs', text: 'Bahamas' },
-    { key: 'bh', value: 'bh', text: 'Bahrain' },
-    { key: 'bd', value: 'bd', text: 'Bangladesh' },
-    { key: 'bb', value: 'bb', text: 'Barbados' },
-    { key: 'by', value: 'by', text: 'Belarus' },
-    { key: 'be', value: 'be', text: 'Belgium' },
-    { key: 'bz', value: 'bz', text: 'Belize' },
-    { key: 'bj', value: 'bj', text: 'Benin' },
+    { key: 'ac', value: 'ac', text: 'Acre' },
+    { key: 'al', value: 'al', text: 'Alagoas' },
+    { key: 'ap', value: 'ap', text: 'Amapá' },
+    { key: 'am', value: 'am', text: 'Amazonas' },
+    { key: 'ba', value: 'ba', text: 'Bahia' },
+    { key: 'ce', value: 'ce', text: 'Ceará' },
+    { key: 'df', value: 'df', text: 'Distrito Federal' },
+    { key: 'es', value: 'es', text: 'Espírito Santo' },
+    { key: 'go', value: 'go', text: 'Goiás' },
+    { key: 'ma', value: 'ma', text: 'Maranhão' },
+    { key: 'mt', value: 'mt', text: 'Mato Grosso' },
+    { key: 'ms', value: 'ms', text: 'Mato Grosso do Sul' },
+    { key: 'mg', value: 'mg', text: 'Minas Gerais' },
+    { key: 'pa', value: 'pa', text: 'Pará' },
+    { key: 'pb', value: 'pb', text: 'Paraíba' },
+    { key: 'pr', value: 'pr', text: 'Paraná' },
+    { key: 'pe', value: 'pe', text: 'Pernambuco' },
+    { key: 'pi', value: 'pi', text: 'Piauí' },
+    { key: 'rj', value: 'rj', text: 'Rio de Janeiro' },
+    { key: 'rn', value: 'rn', text: 'Rio Grande do Norte' },
+    { key: 'rs', value: 'rs', text: 'Rio Grande do Sul' },
+    { key: 'ro', value: 'ro', text: 'Rondônia' },
+    { key: 'rr', value: 'rr', text: 'Roraima' },
+    { key: 'sc', value: 'sc', text: 'Santa Catarina' },
+    { key: 'sp', value: 'sp', text: 'São Paulo' },
+    { key: 'se', value: 'se', text: 'Sergipe' },
+    { key: 'to', value: 'to', text: 'Tocantins' },
 ]
 
 export default function FormEntregador() {
+
+    const [nome, setNome] = useState();
+    const [cpf, setCpf] = useState();
+    const [rg, setRg] = useState();
+    const [dataNascimento, setDataNascimento] = useState();
+    const [foneCelular, setFoneCelular] = useState();
+    const [foneFixo, setFoneFixo] = useState();
+    const [qtdEntregasRealizadas, setQtdEntregasRealizadas] = useState();
+    const [valorFrete, setValorFrete] = useState();
+    const [enderecoRua, setEnderecoRua] = useState();
+    const [enderecoNumero, setEnderecoNumero] = useState();
+    const [enderecoBairro, setEnderecoBairro] = useState();
+    const [enderecoCidade, setEnderecoCidade] = useState();
+    const [enderecoCep, setEnderecoCep] = useState();
+    const [enderecoUf, setEnderecoUf] = useState();
+    const [enderecoComplemento, setEnderecoComplemento] = useState();
+    const [ativo, setAtivo] = useState();
+
+    function salvar() {
+
+		let entregadorRequest = {
+		     nome: nome,
+		     cpf: cpf,
+		     dataNascimento: dataNascimento,
+		     foneCelular: foneCelular,
+		     foneFixo: foneFixo
+		}
+	
+		axios.post("http://localhost:8082/api/cliente", entregadorRequest)
+		.then((response) => {
+		     console.log('Entregador cadastrado com sucesso.')
+		})
+		.catch((error) => {
+		     console.log('Erro ao incluir o um entregador.')
+		})
+	}
+
+    
+
 
     return (
 
@@ -54,6 +98,8 @@ export default function FormEntregador() {
                                     label='Nome'
                                     maxLength="100"
                                     width={10}
+                                    value={nome}
+                                    onChange={e => setNome(e.target.value)}
 
                                 />
 
@@ -65,6 +111,9 @@ export default function FormEntregador() {
                                 >
                                     <InputMask
                                         required
+                                        mask="999.999.999-99"
+                                        value={cpf}
+                                        onChange={e => setCpf(e.target.value)}
                                     />
                                 </Form.Input>
 
@@ -75,6 +124,9 @@ export default function FormEntregador() {
                                 >
                                     <InputMask
                                         required
+                                        mask="99.999.999"
+                                        value={rg}
+                                        onChange={e => setRg(e.target.value)}
                                     />
                                 </Form.Input>
 
@@ -89,6 +141,8 @@ export default function FormEntregador() {
                                     width={6}>
                                     <InputMask
                                         placeholder="Ex: 20/03/1985"
+                                        value={dataNascimento}
+                                        onChange={e => setDataNascimento(e.target.value)}
                                     />
                                 </Form.Input>
 
@@ -98,7 +152,9 @@ export default function FormEntregador() {
                                     label='Fone Celular'
                                     width={6}>
                                     <InputMask
-
+                                          mask="(99) 9999.9999"
+                                          value={foneCelular}
+                                          onChange={e => setFoneCelular(e.target.value)}
                                     />
                                 </Form.Input>
 
@@ -107,7 +163,9 @@ export default function FormEntregador() {
                                     label='Fone Fixo'
                                     width={6}>
                                     <InputMask
-
+                                        mask="(99) 9999.9999"
+                                        value={foneFixo}
+                                        onChange={e => setFoneFixo(e.target.value)}
                                     />
                                 </Form.Input>
 
@@ -115,6 +173,8 @@ export default function FormEntregador() {
                                     fluid
                                     label='QTD Entregas Realizadas'
                                     width={6}
+                                    value={qtdEntregasRealizadas}
+                                    onChange={e => setQtdEntregasRealizadas(e.target.value)}
                                 >
 
                                 </Form.Input>
@@ -122,8 +182,9 @@ export default function FormEntregador() {
                                     fluid
                                     label='Valor Por Frete'
                                     width={6}
+                                    value={valorFrete}
+                                    onChange={e => setValorFrete(e.target.value)}
                                 >
-
                                 </Form.Input>
 
                             </Form.Group>
@@ -134,6 +195,8 @@ export default function FormEntregador() {
                                     fluid
                                     label='Rua'
                                     width={12}
+                                    value={enderecoRua}
+                                    onChange={e => setEnderecoRua(e.target.value)}
 
                                 />
 
@@ -141,8 +204,9 @@ export default function FormEntregador() {
                                     fluid
                                     label='Número'
                                     width={5}
+                                    value={enderecoNumero}
+                                    onChange={e => setEnderecoNumero(e.target.value)}
                                 />
-
                             </Form.Group>
 
                             <Form.Group>
@@ -151,19 +215,24 @@ export default function FormEntregador() {
                                     fluid
                                     label='Bairro'
                                     width={9}
-
+                                    value={enderecoBairro}
+                                    onChange={e => setEnderecoBairro(e.target.value)}
                                 />
 
                                 <Form.Input
                                     fluid
                                     label='Cidade'
                                     width={9}
+                                    value={enderecoCidade}
+                                    onChange={e => setEnderecoCidade(e.target.value)}
                                 />
 
                                 <Form.Input
                                     fluid
                                     label='CEP'
                                     width={3}
+                                    value={enderecoCep}
+                                    onChange={e => setEnderecoCep(e.target.value)}
                                 />
 
                             </Form.Group>
@@ -173,6 +242,9 @@ export default function FormEntregador() {
                                 label='UF'
                                 options={options}
                                 placeholder='Selecione'
+                                value={(e,{value}) =>{
+                                    setEnderecoUf(value)
+                                }}
                             />
 
                             <Form.Input
@@ -180,8 +252,8 @@ export default function FormEntregador() {
                                 fluid
                                 label='Complemento'
                                 maxLength="100"
-
-
+                                value={enderecoComplemento}
+                                onChange={e => setEnderecoComplemento(e.target.value)}
                             />
 
                             <FormGroup inline>
@@ -189,15 +261,13 @@ export default function FormEntregador() {
                             
                                 <FormRadio
                                     label='Sim'
-                                    value='sim'
-                                    // checked={value === 'md'}
-                                    // onChange={this.handleChange}
+                                    checked={ativo}
+                                    onChange={e => setAtivo(true)}
                                 />
                                 <FormRadio
                                     label='Não'
-                                    value='nao'
-                                    // checked={value === 'lg'}
-                                    // onChange={this.handleChange}
+                                    checked={!ativo}
+                                    onChange={e => setAtivo(false)}
                                 />
                                 </FormGroup>
 
@@ -227,6 +297,7 @@ export default function FormEntregador() {
                                 labelPosition='left'
                                 color='blue'
                                 floated='right'
+                                onClick={() => salvar()}
                             >
                                 <Icon name='save' />
                                 Salvar
