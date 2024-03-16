@@ -50,19 +50,30 @@ export default function FormEntregador() {
     const [enderecoCep, setEnderecoCep] = useState();
     const [enderecoUf, setEnderecoUf] = useState();
     const [enderecoComplemento, setEnderecoComplemento] = useState();
-    const [ativo, setAtivo] = useState();
+    const [ativo, setAtivo] = useState(true);
 
     function salvar() {
 
 		let entregadorRequest = {
 		     nome: nome,
 		     cpf: cpf,
+             rg: rg,
 		     dataNascimento: dataNascimento,
 		     foneCelular: foneCelular,
-		     foneFixo: foneFixo
+		     foneFixo: foneFixo,
+             qtdEntregasRealizadas: qtdEntregasRealizadas,
+             valorFrete: valorFrete,
+             enderecoRua: enderecoRua,
+             enderecoNumero: enderecoNumero,
+             enderecoBairro: enderecoBairro,
+             enderecoCidade: enderecoCidade,
+             enderecoCep: enderecoCep,
+             enderecoUf: enderecoUf,
+             enderecoComplemento: enderecoComplemento,
+             ativo: ativo
 		}
 	
-		axios.post("http://localhost:8082/api/cliente", entregadorRequest)
+		axios.post("http://localhost:8081/api/entregador", entregadorRequest)
 		.then((response) => {
 		     console.log('Entregador cadastrado com sucesso.')
 		})
@@ -70,8 +81,6 @@ export default function FormEntregador() {
 		     console.log('Erro ao incluir o um entregador.')
 		})
 	}
-
-    
 
 
     return (
@@ -141,6 +150,7 @@ export default function FormEntregador() {
                                     width={6}>
                                     <InputMask
                                         placeholder="Ex: 20/03/1985"
+                                        mask="99/99/9999"
                                         value={dataNascimento}
                                         onChange={e => setDataNascimento(e.target.value)}
                                     />
@@ -242,7 +252,8 @@ export default function FormEntregador() {
                                 label='UF'
                                 options={options}
                                 placeholder='Selecione'
-                                value={(e,{value}) =>{
+                                value={enderecoUf}
+                                onChange={(e,{value}) =>{
                                     setEnderecoUf(value)
                                 }}
                             />
