@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, FormField, Icon, TextArea } from 'semantic-ui-react';
+import MenuSistema from '../../MenuSistema';
 
 export default function FormProduto() {
 
@@ -11,7 +12,7 @@ export default function FormProduto() {
     const [valorUnitario, setValorUnitario] = useState();
     const [tempoEntregaMinimo, setTempoEntregaMinimo] = useState();
     const [tempoEntregaMaximo, setTempoEntregaMaximo] = useState();
-
+ 
     function salvar() {
 
 		let produtoRequest = {
@@ -36,6 +37,8 @@ export default function FormProduto() {
     return (
         <div>
 
+            <MenuSistema />
+            
             <div style={{ marginTop: '3%' }}>
 
                 <Container textAlign='justified' >
