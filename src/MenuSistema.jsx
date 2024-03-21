@@ -23,15 +23,15 @@ export default function MenuSistema () {
                    active={activeItem === 'cliente'}
                    onClick={() => setActiveItem('cliente')}
                    as={Link}
-                   to='/form-cliente'
+                   to='/list-cliente'
                />
 
-<Menu.Item
+                <Menu.Item
                    name='produto'
                    active={activeItem === 'produto'}
                    onClick={() => setActiveItem('produto')}
                    as={Link}
-                   to='/form-produto'
+                   to='/list-produto'
                />
 
                <Menu.Item
@@ -39,7 +39,7 @@ export default function MenuSistema () {
                    active={activeItem === 'entregador'}
                    onClick={() => setActiveItem('entregador')}
                    as={Link}
-                   to='/form-entregador'
+                   to='/list-entregador'
                />
 
            </Menu>

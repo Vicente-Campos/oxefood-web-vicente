@@ -3,6 +3,7 @@ import axios from "axios";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon, FormSelect, FormGroup, FormRadio} from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
+import { Link } from "react-router-dom";
 
 const options = [
     { key: 'ac', value: 'ac', text: 'Acre' },
@@ -292,6 +293,7 @@ export default function FormEntregador() {
 
                         <div style={{ marginTop: '4%' }}>
 
+                        <Link to={'/list-entregador'}>
                             <Button
                                 type="button"
                                 inverted
@@ -300,9 +302,10 @@ export default function FormEntregador() {
                                 labelPosition='left'
                                 color='orange'
                             >
-                                <Icon name='reply' />
                                 Voltar
-                            </Button>
+                                <Icon name='reply' />
+                                </Button>
+                            </Link>
 
                             <Button
                                 inverted
