@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, Icon, FormSelect, FormGroup, FormRadio} from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Icon, FormSelect, FormGroup, FormRadio } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const options = [
     { key: 'ac', value: 'ac', text: 'Acre' },
@@ -37,6 +37,10 @@ const options = [
 
 export default function FormEntregador() {
 
+    const { state } = useLocation();
+    const [idEntregador, setIdEntregador] = useState();
+
+
     const [nome, setNome] = useState();
     const [cpf, setCpf] = useState();
     const [rg, setRg] = useState();
@@ -54,35 +58,74 @@ export default function FormEntregador() {
     const [enderecoComplemento, setEnderecoComplemento] = useState();
     const [ativo, setAtivo] = useState(true);
 
+    useEffect(() => {
+        if (state != null && state.id != null) {
+            axios.get("http://localhost:8081/api/entregador/" + state.id)
+                .then((response) => {
+                    setIdEntregador(response.data.id)
+                    setNome(response.data.nome)
+                    setCpf(response.data.cpf)
+                    setRg(response.data.rg)
+                    setDataNascimento(formatarData(response.data.dataNascimento))
+                    setFoneCelular(response.data.foneCelular)
+                    setFoneFixo(response.data.foneFixo)
+                    setQtdEntregasRealizadas(response.data.qtdEntregasRealizadas)
+                    setValorFrete(response.data.valorFrete)
+                    setEnderecoRua(response.data.enderecoRua)
+                    setEnderecoNumero(response.data.enderecoNumero)
+                    setEnderecoBairro(response.data.enderecoBairro)
+                    setEnderecoCidade(response.data.enderecoCidade)
+                    setEnderecoCep(response.data.enderecoCep)
+                    setEnderecoUf(response.data.enderecoCep)
+                    setEnderecoComplemento(response.data.enderecoComplemento)
+                    setAtivo(response.data.ativo)
+                })
+        }
+    }, [state])
+
+    function formatarData(dataParam) {
+
+        if (dataParam === null || dataParam === '' || dataParam === undefined) {
+            return ''
+        }
+
+        let arrayData = dataParam.split('-');
+        return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
+    }
+
+
     function salvar() {
 
-		let entregadorRequest = {
-		     nome: nome,
-		     cpf: cpf,
-             rg: rg,
-		     dataNascimento: dataNascimento,
-		     foneCelular: foneCelular,
-		     foneFixo: foneFixo,
-             qtdEntregasRealizadas: qtdEntregasRealizadas,
-             valorFrete: valorFrete,
-             enderecoRua: enderecoRua,
-             enderecoNumero: enderecoNumero,
-             enderecoBairro: enderecoBairro,
-             enderecoCidade: enderecoCidade,
-             enderecoCep: enderecoCep,
-             enderecoUf: enderecoUf,
-             enderecoComplemento: enderecoComplemento,
-             ativo: ativo
-		}
-	
-		axios.post("http://localhost:8081/api/entregador", entregadorRequest)
-		.then((response) => {
-		     console.log('Entregador cadastrado com sucesso.')
-		})
-		.catch((error) => {
-		     console.log('Erro ao incluir o um entregador.')
-		})
-	}
+        let entregadorRequest = {
+            nome: nome,
+            cpf: cpf,
+            rg: rg,
+            dataNascimento: dataNascimento,
+            foneCelular: foneCelular,
+            foneFixo: foneFixo,
+            qtdEntregasRealizadas: qtdEntregasRealizadas,
+            valorFrete: valorFrete,
+            enderecoRua: enderecoRua,
+            enderecoNumero: enderecoNumero,
+            enderecoBairro: enderecoBairro,
+            enderecoCidade: enderecoCidade,
+            enderecoCep: enderecoCep,
+            enderecoUf: enderecoUf,
+            enderecoComplemento: enderecoComplemento,
+            ativo: ativo
+        }
+
+        if (idEntregador != null) { //Alteração:
+            axios.put("http://localhost:8081/api/entregador/" + idEntregador, entregadorRequest)
+                .then((response) => { console.log('Entregador alterado com sucesso.') })
+                .catch((error) => { console.log('Erro ao alter um entregador.') })
+        } else { //Cadastro:
+            axios.post("http://localhost:8081/api/entregador", entregadorRequest)
+                .then((response) => { console.log('Entregador cadastrado com sucesso.') })
+                .catch((error) => { console.log('Erro ao incluir o entregador.') })
+        }
+
+    }
 
 
     return (
@@ -95,7 +138,12 @@ export default function FormEntregador() {
 
                 <Container textAlign='justified' >
 
-                    <h2> <span style={{ color: 'darkgray' }}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+                    {idEntregador === undefined &&
+                        <h2> <span style={{ color: 'darkgray' }}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro</h2>
+                    }
+                    {idEntregador != undefined &&
+                        <h2> <span style={{ color: 'darkgray' }}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
+                    }
 
                     <Divider />
 
@@ -166,9 +214,9 @@ export default function FormEntregador() {
                                     label='Fone Celular'
                                     width={6}>
                                     <InputMask
-                                          mask="(99) 9999.9999"
-                                          value={foneCelular}
-                                          onChange={e => setFoneCelular(e.target.value)}
+                                        mask="(99) 9999.9999"
+                                        value={foneCelular}
+                                        onChange={e => setFoneCelular(e.target.value)}
                                     />
                                 </Form.Input>
 
@@ -257,13 +305,13 @@ export default function FormEntregador() {
                                 options={options}
                                 placeholder='Selecione'
                                 value={enderecoUf}
-                                onChange={(e,{value}) =>{
+                                onChange={(e, { value }) => {
                                     setEnderecoUf(value)
                                 }}
                             />
 
                             <Form.Input
-                            
+
                                 fluid
                                 label='Complemento'
                                 maxLength="100"
@@ -273,7 +321,7 @@ export default function FormEntregador() {
 
                             <FormGroup inline>
                                 <label>Ativo</label>
-                            
+
                                 <FormRadio
                                     label='Sim'
                                     checked={ativo}
@@ -284,7 +332,7 @@ export default function FormEntregador() {
                                     checked={!ativo}
                                     onChange={e => setAtivo(false)}
                                 />
-                                </FormGroup>
+                            </FormGroup>
 
 
                         </Form>
@@ -293,17 +341,17 @@ export default function FormEntregador() {
 
                         <div style={{ marginTop: '4%' }}>
 
-                        <Link to={'/list-entregador'}>
-                            <Button
-                                type="button"
-                                inverted
-                                circular
-                                icon
-                                labelPosition='left'
-                                color='orange'
-                            >
-                                Voltar
-                                <Icon name='reply' />
+                            <Link to={'/list-entregador'}>
+                                <Button
+                                    type="button"
+                                    inverted
+                                    circular
+                                    icon
+                                    labelPosition='left'
+                                    color='orange'
+                                >
+                                    Voltar
+                                    <Icon name='reply' />
                                 </Button>
                             </Link>
 

@@ -73,7 +73,7 @@ export default function ListEntregador() {
                                     <Table.HeaderCell>RG</Table.HeaderCell>
                                     <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
                                     <Table.HeaderCell>Fone Celular</Table.HeaderCell>
-                                    <Table.HeaderCell>Quantidade de entregas realizadas</Table.HeaderCell>
+                                    {/* <Table.HeaderCell>Quantidade de entregas realizadas</Table.HeaderCell> */}
                                     <Table.HeaderCell>Valor do frete</Table.HeaderCell>
                                     <Table.HeaderCell>Ativo </Table.HeaderCell>
                                     <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
@@ -90,9 +90,9 @@ export default function ListEntregador() {
                                         <Table.Cell>{entregador.rg}</Table.Cell>
                                         <Table.Cell>{formatarData(entregador.dataNascimento)}</Table.Cell>
                                         <Table.Cell>{entregador.foneCelular}</Table.Cell>
-                                        <Table.Cell>{entregador.qtdEntregasRealizadas}</Table.Cell>
+                                        {/* <Table.Cell>{entregador.qtdEntregasRealizadas}</Table.Cell> */}
                                         <Table.Cell>{entregador.valorFrete}</Table.Cell>
-                                        <Table.Cell>{mostrarAtivo(entregador.ativo)}</Table.Cell>
+                                       <Table.Cell>{mostrarAtivo(entregador.ativo)}</Table.Cell> 
                                         <Table.Cell textAlign='center'>
 
                                             <Button
@@ -101,8 +101,8 @@ export default function ListEntregador() {
                                                 color='green'
                                                 title='Clique aqui para editar os dados deste entregador'
                                                 icon>
-                                                <Icon name='edit' />
-                                            </Button> &nbsp;
+                                               <Link to="/form-entregador" state={{id: entregador.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+                                            </Button> 
                                             <Button
                                                 inverted
                                                 circular
