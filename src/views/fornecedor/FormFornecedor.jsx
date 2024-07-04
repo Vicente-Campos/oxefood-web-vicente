@@ -96,9 +96,10 @@ export default function FormFornecedor() {
 
                         <Form>
 
-                            <Form.Group widths='equal'>
+                            <Form.Group>
 
                                 <Form.Input
+                                    width={12}
                                     required
                                     fluid
                                     label='Nome'
@@ -109,6 +110,7 @@ export default function FormFornecedor() {
 
                                 <Form.Input
                                     fluid
+                                    width={5}
                                     label='Data de Fundação'>
                                     <InputMask
                                         mask="99/99/9999"
@@ -121,22 +123,23 @@ export default function FormFornecedor() {
 
                             </Form.Group>
 
+                            <Form.Input
+                                fluid
+                                label='Endereço'
+                                width={20}>
+                                <InputMask
+                                    value={endereco}
+                                    onChange={e => setEndereco(e.target.value)}
+                                />
+                            </Form.Input>
+
+
                             <Form.Group>
 
                                 <Form.Input
                                     fluid
-                                    label='Endereço'
-                                    width={6}>
-                                    <InputMask
-                                        value={endereco}
-                                        onChange={e => setEndereco(e.target.value)}
-                                    />
-                                </Form.Input>
-
-                                <Form.Input
-                                    fluid
                                     label='Valor de mercado'
-                                    width={6}>
+                                    width={5}>
                                     <InputMask
                                         value={valorMercado}
                                         onChange={e => setValorMercado(e.target.value)}
@@ -146,7 +149,7 @@ export default function FormFornecedor() {
                                 <Form.Input
                                     fluid
                                     label='Contato vendedor'
-                                    width={6}
+                                    width={15}
                                 >
                                     <InputMask
                                         maskChar={null}
@@ -155,17 +158,18 @@ export default function FormFornecedor() {
                                     />
                                 </Form.Input>
 
-                                <Form.Input
-                                    fluid
-                                    label='Página web'
-                                    width={6}>
-                                    <InputMask
-                                        value={paginaWeb}
-                                        onChange={e => setPaginaWeb(e.target.value)}
-                                    />
-                                </Form.Input>
-
                             </Form.Group>
+                            
+                            <Form.Input
+                                fluid
+                                label='Página web'
+                                width={20}>
+                                <InputMask
+                                    value={paginaWeb}
+                                    onChange={e => setPaginaWeb(e.target.value)}
+                                />
+                            </Form.Input>
+
 
                         </Form>
 

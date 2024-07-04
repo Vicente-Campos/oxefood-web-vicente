@@ -46,7 +46,7 @@ export default function MenuSistema () {
                    active={activeItem === 'fornecedor'}
                    onClick={() => setActiveItem('fornecedor')}
                    as={Link}
-                   to='/form-fornecedor'
+                   to='/list-fornecedor'
                />
 
            </Menu>

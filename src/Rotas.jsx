@@ -9,22 +9,22 @@ import ListEntregador from './views/entregador/ListEntregador';
 import FormProduto from './views/produto/FormProduto';
 import ListProduto from './views/produto/ListProduto';
 import FormFornecedor from './views/fornecedor/FormFornecedor';
-// import listFornecedor from './views/fornecedor/ListFornecedor';
+import ListFornecedor from './views/fornecedor/ListFornecedor';
 
 function Rotas() {
     return (
         <>
             <Routes>
-                <Route path="/" element={ <Home/> } />
-                <Route path="form-cliente" element={ <FormCliente/> } />
-                <Route path="list-cliente" element={ <ListCliente/> } />
-                <Route path="form-produto" element={ <FormProduto/> } />
-                <Route path="list-produto" element={ <ListProduto/> } />
-                <Route path="form-entregador" element={ <FormEntregador/> } />
-                <Route path="list-entregador" element={ <ListEntregador/> } />
-                <Route path="form-fornecedor" element={ <FormFornecedor/> } />
-                {/* <Route path="list-fornecedor" element={ <ListFornecedor/> } /> */}
-                
+                <Route path="/" element={<Home />} />
+                <Route path="form-cliente" element={<FormCliente />} />
+                <Route path="list-cliente" element={<ListCliente />} />
+                <Route path="form-produto" element={<FormProduto />} />
+                <Route path="list-produto" element={<ListProduto />} />
+                <Route path="form-entregador" element={<FormEntregador />} />
+                <Route path="list-entregador" element={<ListEntregador />} />
+                <Route path="form-fornecedor" element={<FormFornecedor />} />
+                <Route path="list-fornecedor" element={<ListFornecedor />} />
+
             </Routes>
         </>
     )
