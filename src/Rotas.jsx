@@ -25,6 +25,7 @@ function Rotas() {
                 <Route path="form-fornecedor" element={<FormFornecedor />} />
                 <Route path="list-fornecedor" element={<ListFornecedor />} />
 
+
             </Routes>
         </>
     )
