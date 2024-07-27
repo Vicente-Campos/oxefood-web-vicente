@@ -104,7 +104,7 @@ export default function FormProduto() {
               Cadastro
             </h2>
           )}
-          {idProduto != undefined && (
+          {idProduto !== undefined && (
             <h2>
               {" "}
               <span style={{ color: "darkgray" }}>
