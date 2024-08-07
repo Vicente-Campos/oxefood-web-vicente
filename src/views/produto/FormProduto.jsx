@@ -12,6 +12,8 @@ import {
 } from "semantic-ui-react";
 import MenuSistema from "../../MenuSistema";
 import { Link, useLocation } from "react-router-dom";
+import {mensagemErro, notifyError, notifySuccess } from '../../views/util/Util';
+
 
 export default function FormProduto() {
   const { state } = useLocation();
@@ -79,10 +81,14 @@ export default function FormProduto() {
       axios
         .post("http://localhost:8081/api/produto", produtoRequest)
         .then((response) => {
-          console.log("Produto cadastrado com sucesso.");
+          notifySuccess("Produto cadastrado com sucesso.");
         })
         .catch((error) => {
-          console.log("Erro ao incluir o produto.");
+          if (error.response) {
+            notifyError(error.response.data.message);
+          } else {
+            notifyError(mensagemErro);
+          }
         });
     }
   }

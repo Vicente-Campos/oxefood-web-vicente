@@ -74,7 +74,8 @@ export default function FormCliente() {
         })
         .catch((error) => {
           if (error.response) {
-            notifyError(error.response.data.errors[0].defaultMessage);
+            console.log(error.response)
+            notifyError(error.response.data.message);
           } else {
             notifyError(mensagemErro);
           }
