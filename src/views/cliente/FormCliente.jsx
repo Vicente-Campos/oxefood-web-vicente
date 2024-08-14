@@ -73,11 +73,12 @@ export default function FormCliente() {
           notifySuccess("Cliente cadastrado com sucesso.");
         })
         .catch((error) => {
-          if (error.response) {
-            console.log(error.response)
-            notifyError(error.response.data.message);
+          if (error.response.data.errors != undefined) {
+            for (let i = 0; i < error.response.data.errors.length; i++) {
+              notifyError(error.response.data.errors[i].defaultMessage);
+            }
           } else {
-            notifyError(mensagemErro);
+            notifyError(error.response.data.message);
           }
         });
     }

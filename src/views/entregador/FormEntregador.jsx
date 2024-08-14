@@ -146,13 +146,12 @@ export default function FormEntregador() {
           notifySuccess("Entregador cadastrado com sucesso.");
         })
         .catch((error) => {
-          if (error.response) {
-
-            console.log(error.response.data.errors[0].defaultMessage); // pegando do BeanValidation
-            console.log(error.response.data.message); // pegando da exeçaõ
-            notifyError(error.response.data.errors[0].defaultMessage);
+          if (error.response.data.errors != undefined) {
+            for (let i = 0; i < error.response.data.errors.length; i++) {
+              notifyError(error.response.data.errors[i].defaultMessage);
+            }
           } else {
-            notifyError(mensagemErro);
+            notifyError(error.response.data.message);
           }
         });
     }

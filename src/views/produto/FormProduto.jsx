@@ -12,8 +12,11 @@ import {
 } from "semantic-ui-react";
 import MenuSistema from "../../MenuSistema";
 import { Link, useLocation } from "react-router-dom";
-import {mensagemErro, notifyError, notifySuccess } from '../../views/util/Util';
-
+import {
+  mensagemErro,
+  notifyError,
+  notifySuccess,
+} from "../../views/util/Util";
 
 export default function FormProduto() {
   const { state } = useLocation();
@@ -44,15 +47,13 @@ export default function FormProduto() {
         });
     }
 
-    axios
-      .get("http://localhost:8081/api/categoria")
-      .then((response) => {
-        const dropDownCategorias = response.data.map((c) => ({
-          text: c.descricao,
-          value: c.id,
-        }));
-        setListaCategoria(dropDownCategorias);
-      });
+    axios.get("http://localhost:8081/api/categoria").then((response) => {
+      const dropDownCategorias = response.data.map((c) => ({
+        text: c.descricao,
+        value: c.id,
+      }));
+      setListaCategoria(dropDownCategorias);
+    });
   }, [state]);
 
   function salvar() {
@@ -84,10 +85,12 @@ export default function FormProduto() {
           notifySuccess("Produto cadastrado com sucesso.");
         })
         .catch((error) => {
-          if (error.response) {
-            notifyError(error.response.data.message);
+          if (error.response.data.errors != undefined) {
+            for (let i = 0; i < error.response.data.errors.length; i++) {
+              notifyError(error.response.data.errors[i].defaultMessage);
+            }
           } else {
-            notifyError(mensagemErro);
+            notifyError(error.response.data.message);
           }
         });
     }
