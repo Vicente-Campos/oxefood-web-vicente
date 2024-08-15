@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
+import { logout } from './views/util/AuthenticationService';
 
 export default function MenuSistema () {
 
    const [activeItem, setActiveItem] = useState();
 
+   
    return(
        <>
            <Menu inverted>
@@ -15,7 +17,7 @@ export default function MenuSistema () {
                    active={activeItem === 'home'}
                    onClick={() => setActiveItem('home')}
                    as={Link}
-                   to='/'
+                   to='/home'
                />
 
                <Menu.Item
@@ -55,9 +57,17 @@ export default function MenuSistema () {
                    as={Link}
                    to='/list-fabricante'
                />
+               <Menu.Item
+                    className='navbar__item--mobile'
+                    onClick={logout}
+                    content='Sair'
+                    as={Link}
+                    to='/'
+                />
 
            </Menu>
        </>
    )
 }
+
 
